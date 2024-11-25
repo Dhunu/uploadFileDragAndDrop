@@ -10,6 +10,7 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import { collection, orderBy, query } from "firebase/firestore";
 import { db } from "@/firebase";
 import { Skeleton } from "../ui/skeleton";
+import { ArrowDown, ArrowUp } from "lucide-react";
 
 const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
     const { user } = useUser();
@@ -43,8 +44,9 @@ const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
     if (docs?.docs.length === undefined)
         return (
             <div className="flex flex-col">
-                <Button variant="outline" className="w-32 h-10 mb-5 self-end">
-                    <Skeleton className="h-5 w-full" />
+                <Button variant="outline" className="ml-auto mb-5">
+                    <Skeleton className="h-4 w-4 mr-2" />
+                    <Skeleton className="h-4 w-20" />
                 </Button>
 
                 <div className="border rounded-lg">
@@ -55,14 +57,14 @@ const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
                             className="flex items-center space-x-4 p-5 w-full"
                         >
                             <Skeleton className="h-12 w-12" />
-                            <Skeleton className="h-12 w-full" />
+                            <Skeleton className="h-4 w-[60%]" />
                         </div>
                     ))}
 
                     {skeletonFiles.length === 0 && (
-                        <div className="flex ic space-x-4 p-5 w-full">
+                        <div className="flex items-center space-x-4 p-5 w-full">
                             <Skeleton className="h-12 w-12" />
-                            <Skeleton className="h-12 w-full" />
+                            <Skeleton className="h-4 w-[60%]" />
                         </div>
                     )}
                 </div>
@@ -70,18 +72,23 @@ const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
         );
 
     return (
-        <div className="flex flex-col gap-5">
-            {/* Button */}
+        <div className="flex flex-col space-y-5">
             <Button
                 variant="outline"
-                className="w-fit self-end"
                 onClick={() => setSort(sort === "desc" ? "asc" : "desc")}
+                className="ml-auto w-fit"
             >
+                {sort === "desc" ? (
+                    <ArrowDown className="h-4 w-4 mr-2" />
+                ) : (
+                    <ArrowUp className="h-4 w-4 mr-2" />
+                )}
                 Sort by {sort === "desc" ? "Newest" : "Oldest"}
             </Button>
 
-            {/* DataTable */}
-            <DataTable columns={columns} data={initialFiles} />
+            <div className="rounded-lg border bg-white dark:bg-gray-800">
+                <DataTable columns={columns} data={initialFiles} />
+            </div>
         </div>
     );
 };

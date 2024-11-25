@@ -6,7 +6,7 @@ import { ThemeToggle } from "./ThemeToggler";
 
 const Header = () => {
     return (
-        <header className="flex justify-between items-center p-2 sticky top-0 left-0 dark:bg-black">
+        <header className="flex justify-between items-center p-2 sticky top-0 left-0 dark:bg-black/80 bg-white/80 backdrop-blur-sm z-50 border-b">
             <Link href="/" className="flex items-center space-x-2">
                 <div className="w-fit">
                     <Image
@@ -22,9 +22,9 @@ const Header = () => {
             {/* Theme Toggler */}
             <div className="px-5 flex space-x-2 items-center">
                 <ThemeToggle />
-                <UserButton afterSignOutUrl="/" />
+                <UserButton />
                 <SignedOut>
-                    <SignInButton afterSignInUrl="/dashboard" mode="modal">
+                    <SignInButton mode="modal">
                         Sign In
                     </SignInButton>
                 </SignedOut>
